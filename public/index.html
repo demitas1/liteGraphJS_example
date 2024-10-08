@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiteGraph.js TypeScript Example</title>
-    <style>
-        body, html {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #1e1e1e; /* Dark background color */
-        }
-        #mycanvas {
-            border: 1px solid #444; /* Darker border color for contrast */
-            display: block; /* Removes any extra space below the canvas */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiteGraph.js TypeScript Example</title>
+  <style>
+    body, html {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #1e1e1e;
+    }
+    #mycanvas {
+      border: 1px solid #444;
+      display: block;
+    }
+    #controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <canvas id='mycanvas'></canvas>
+  <div id="controls">
+    <button id="saveButton">Save Graph</button>
+    <button id="loadButton">Load Graph</button>
+  </div>
+  <canvas id='mycanvas'></canvas>
 </body>
 </html>
