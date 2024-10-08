@@ -1,6 +1,5 @@
-import { LGraph, LGraphCanvas, LiteGraph, LGraphNode } from 'litegraph.js';
+import { LGraph, LGraphCanvas, LiteGraph, LGraphNode, INodeInputSlot, INodeOutputSlot } from 'litegraph.js';
 import 'litegraph.js/css/litegraph.css';
-
 
 // Add type declarations for File System Access API
 declare global {
@@ -13,6 +12,33 @@ declare global {
 interface ConstantNode extends LGraphNode {
   setValue(value: number): void;
 }
+
+// Define the MyAddNode class
+class MyAddNode extends LGraphNode {
+  constructor() {
+  super();
+  this.addInput("A", "number");
+  this.addInput("B", "number");
+  this.addOutput("A+B", "number");
+  this.properties = { precision: 1 };
+  }
+
+  onExecute() {
+  let A = this.getInputData(0);
+  if (A === undefined) A = 0;
+  let B = this.getInputData(1);
+  if (B === undefined) B = 0;
+  this.setOutputData(0, A + B);
+  }
+}
+
+// Set the title for the node
+MyAddNode.title = "Sum";
+
+// Register the new node type
+LiteGraph.registerNodeType("custom/sum", MyAddNode);
+
+
 
 window.addEventListener('load', () => {
   const graph = new LGraph();
@@ -36,7 +62,6 @@ window.addEventListener('load', () => {
     const data = JSON.stringify(graph.serialize());
 
     if (window.showSaveFilePicker) {
-      console.log('using SaveFilePicker');
       try {
         const handle = await window.showSaveFilePicker({
           suggestedName: 'graph.json',
@@ -56,7 +81,6 @@ window.addEventListener('load', () => {
       }
     } else {
       // Fallback for browsers that don't support the File System Access API
-      console.log('SaveFilePicker is not available. using fallback');
       const blob = new Blob([data], {type: 'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -70,7 +94,6 @@ window.addEventListener('load', () => {
   // Load graph from file
   async function loadGraph() {
     if (window.showOpenFilePicker) {
-      console.log('using OpenFilePicker');
       try {
         const [handle] = await window.showOpenFilePicker({
           types: [{
@@ -91,7 +114,6 @@ window.addEventListener('load', () => {
       }
     } else {
       // Fallback for browsers that don't support the File System Access API
-      console.log('OpenFilePicker is not available. using fallback');
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.json';
@@ -127,6 +149,11 @@ window.addEventListener('load', () => {
     node_watch.pos = [700, 200];
     graph.add(node_watch);
 
-    node_const.connect(0, node_watch, 0);
+    const node_sum = LiteGraph.createNode("custom/sum");
+    node_sum.pos = [450, 200];
+    graph.add(node_sum);
+
+    node_const.connect(0, node_sum, 0);
+    node_sum.connect(0, node_watch, 0);
   }
 });
