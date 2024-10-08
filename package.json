@@ -1,0 +1,29 @@
+{
+  "name": "litegraphjs_test",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode development --open-app-name 'brave-browser'",
+    "firefox": "webpack serve --mode development --open-app-name 'firefox'",
+    "brave": "webpack serve --mode development --open-app-name 'brave-browser'",
+    "chrome": "webpack serve --mode development --open-app-name 'google-chrome'",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "demitas",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "litegraph.js": "^0.7.18"
+  },
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.2",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
